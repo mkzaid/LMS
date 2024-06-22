@@ -1,15 +1,17 @@
 
 import './App.css'
-import SideBar from "./components/sidebar/SideBar"
+import SideBar from "./components/SideBar"
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-import Courses from './pages/courses/Courses';
-import Home from './pages/home/Home';
-import Assignment from './pages/Assignments/Assignment';
+import Courses from './pages/Courses';
+import Home from './pages/Home';
+import Assignment from './pages/Assignment';
+import { DataProvider } from './context/Data';
 
 function App() {
 
 
   return (
+    <DataProvider>
     <Router>
             <div className="app">
                 <SideBar />
@@ -22,6 +24,7 @@ function App() {
                 </div>
             </div>
         </Router>
+    </DataProvider>
   )
 }
 
