@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useData } from '../context/Data';
 
 const AddAssignment = ({toggleAssign, setToggleAssign}) => {
-  const {courses ,setAssignments , assignments , setCourses} = useData()
+  const {courses ,setAssignments , assignments , setCourses ,allData, setData } = useData()
     const inputRefsAssignment = useRef([]);
     const [values, setValues]= useState({
       courseCode:'',
@@ -37,21 +37,42 @@ const AddAssignment = ({toggleAssign, setToggleAssign}) => {
         })
       }
       const handleSubmit =()=>{
-        setAssignments([...assignments,
-          {
-            assignmentTitle:inputRefsAssignment.current[0].value,
-            assignmentDescription:inputRefsAssignment.current[1].value,
-            ...values
-          }])
-          console.log( inputRefsAssignment.current[0].value , inputRefsAssignment.current[1].value, values );
+
+        // setAssignments([...assignments,
+        //   {
+        //     assignmentTitle:inputRefsAssignment.current[0].value,
+        //     assignmentDescription:inputRefsAssignment.current[1].value,
+        //     ...values
+        //   }])
+          const updatedData = allData.map((data)=>{
+          if(data.courseCode==values.courseCode){
+            return {
+              ...data,
+              assignments:[
+                ...data.assignments,
+                {
+                  assignmentId:data.assignments.length+1,
+                  assignmentTitle:inputRefsAssignment.current[0].value,
+                      assignmentDescription:inputRefsAssignment.current[1].value,
+                      ...values
+                }
+              ]
+            }
+          }
+          else{
+            return data
+          }
+          })       
+          setData(updatedData);
           setToggleAssign(false)
 
-       //Login To Increase the Assignment Number of Specific Course
-           setCourses(courses.map(course => 
-            course.courseCode === values.courseCode
-                ? { ...course, assignments: course.assignments + 1 }
-                : course
-        ));
+
+       //Logic To Increase the Assignment Number of Specific Course
+        //    setCourses(courses.map(course => 
+        //     course.courseCode === values.courseCode
+        //         ? { ...course, assignments: course.assignments + 1 }
+        //         : course
+        // ));
 
       }
   return (
@@ -76,7 +97,7 @@ const AddAssignment = ({toggleAssign, setToggleAssign}) => {
           label="courseCode"
           onChange={handleCourseCode}
           >
-          {courses.map((course,index)=><MenuItem key={index} value={course.courseCode}>{course.courseCode}</MenuItem>)}
+          {allData.map((course,index)=><MenuItem key={index} value={course.courseCode}>{course.courseCode}</MenuItem>)}
         </Select>
       </FormControl>
     </Box>

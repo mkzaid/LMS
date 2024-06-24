@@ -6,29 +6,23 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useData } from '../context/Data';
+import { useNavigate } from 'react-router-dom';
 
 
-const AssignmentCard = ({assignmentTitle,assignmentDescription,courseCode,startDate,endDate,assignmentCount}) => {
-    const {setCourses, courses} = useData()
-    const courseObj = courses.find(obj => obj.courseCode === courseCode )
-
-    //  setCourses([
-    //   ...courses,
-    //   {
-    //     ...courseObj,
-    //     assignments:[courseObj].assignments++
-    //   }
-    //  ])
-
-    
+const AssignmentCard = ({assignmentDescription,startDate,endDate,assignmentCount,courseName,courseCode}) => {
+  const navigate = useNavigate()
+    const handleViewAssignment = ()=>{
+   console.log(courseCode,assignmentCount);
+   navigate(`/assign/${courseCode}/${assignmentCount}`)
+    }
   return (
-    <Card sx={{ maxWidth: 275 ,ml:4,mr:2,mb:3 }}>
+    <Card sx={{ width: 275 ,ml:4,mr:2,mb:3 }}>
     <CardContent>
       <Typography align='center' variant="h6" component="div">
-        {courseObj.courseName}
+        {courseName}
       </Typography>
       <Typography sx={{ fontSize: 18 , textAlign:'center' }} gutterBottom>
-        Assignment No : {assignmentCount+1}
+        Assignment No : {assignmentCount}
       </Typography>
       <Typography sx={{ mb: 1.5 }} color="text.secondary">
         {assignmentDescription}
@@ -40,7 +34,7 @@ const AssignmentCard = ({assignmentTitle,assignmentDescription,courseCode,startD
       </Typography>
     </CardContent>
     <CardActions sx={{display:'flex' , justifyContent:'center'}}>
-      <Button size="small">View Assignment</Button>
+      <Button onClick={handleViewAssignment} size="small">View Assignment</Button>
     </CardActions>
   </Card>
   )

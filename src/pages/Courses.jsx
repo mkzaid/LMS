@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 const Courses = () => {
   const [toggleBox, setToggle] = useState(false)
-  const {courses, setCourses} = useData();
+  const {allData} = useData();
 
   
   return (
@@ -22,7 +22,7 @@ const Courses = () => {
     </Box>
     </Box>
     <Box sx={{display:'flex', flexDirection:'row', flexWrap:'wrap'}} >
-      {courses.map((course,ind)=><CourseCard key={ind} teacherName={course.teacherName} courseName={course.courseName}
+      {allData.map((course,ind)=><CourseCard key={ind} teacherName={course.teacherName} courseName={course.courseName}
           hours = {course.hours} courseCode={course.courseCode}  />)}
     </Box>
     </Box>

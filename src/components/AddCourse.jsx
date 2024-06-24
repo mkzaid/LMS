@@ -6,7 +6,7 @@ import { useData } from '../context/Data'
 const AddCourse = ({setToggle , toggle}) => {
 
   //Fetching Data from Contex 
-  const {courses, setCourses} = useData()
+  const {courses, setCourses , allData , setData} = useData()
   const inputRefs = useRef([]);
  //Css styles for Box
   const style = {
@@ -31,15 +31,43 @@ const AddCourse = ({setToggle , toggle}) => {
       event.preventDefault();
       if(inputRefs.current[0].value&&inputRefs.current[1].value&&inputRefs.current[2].value&&inputRefs.current[3].value){
 
-        setCourses([
-          ...courses,
+        // setCourses([
+        //   ...courses,
+        //   {
+        //     teacherName: inputRefs.current[0].value,
+        //     courseName: inputRefs.current[1].value,
+        //     courseCode: inputRefs.current[2].value,
+        //     hours: inputRefs.current[3].value,
+        //     assignments:0
+        //   }])
+        const updatedData = allData.map((data)=>{
+
+        })
+        setData([
+          ...allData,
           {
-            teacherName: inputRefs.current[0].value,
-            courseName: inputRefs.current[1].value,
-            courseCode: inputRefs.current[2].value,
-            hours: inputRefs.current[3].value,
-            assignments:0
-          }])
+                teacherName: inputRefs.current[0].value,
+                courseName: inputRefs.current[1].value,
+                courseCode: inputRefs.current[2].value,
+                hours: inputRefs.current[3].value,
+                assignments:[
+                  {
+              assignmentId:1,
+              assignmentTitle:'Types of Cloud Computing',
+              assignmentDescription:'Write three types of cloud computing in detail. Also tell atleast 3 unique examples of each type.',
+              startDate:'14 June wed',
+              endDate:'18 June Sat',
+                  }
+              ],
+              lectures:[
+                {
+                    lectureId:1,
+                    lectureTitle:'What is Cloud Computing',
+                    lectureLink:'https://www.youtube.com'
+                 }
+        ]
+          }
+        ])
         setToggle(false)
       }else{
         window.alert('Please Enter Values in the Field')

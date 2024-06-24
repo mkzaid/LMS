@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Assignment from './pages/Assignment';
 import { DataProvider } from './context/Data';
 import Lectures from './pages/Lectures';
+import SingleLecture from './pages/SingleLecture';
+import SingleAssignment from './pages/SingleAssignment';
 
 function App() {
 
@@ -21,7 +23,9 @@ function App() {
                         <Route path="/" element={<Courses/>} />
                         <Route path="/courses" element={<Courses/>} />
                         <Route path="/assign" element={<Assignment/>} />
+                        <Route path="/assign/:courseCode/:assignmentCount" element={<SingleAssignment/>} />
                         <Route path="/lecture" element={<Lectures/>} />
+                        <Route path="/lecture/:courseCode/:lectureId" element={<SingleLecture/>} />
                   </Routes>
                 </div>
             </div>

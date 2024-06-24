@@ -6,8 +6,8 @@ import { useData } from '../context/Data';
 import AssignmentCard from '../components/AssignmentCard';
 
 const Assignment = () => {
-  const {assignments} = useData();
-const [toggleAssign , setToggleAssign] = useState(false)
+  const {allData} = useData();
+  const [toggleAssign , setToggleAssign] = useState(false)
 
 //Finding the courseName using courseCode that Teacher will enter
 
@@ -24,11 +24,23 @@ const [toggleAssign , setToggleAssign] = useState(false)
       </Box>
       <Box sx={{display:'flex' , gap:'1' , flexDirection:'row', flexWrap:'wrap'}} >
 
-    {assignments.map((card,indx)=>{
-      
-      return <AssignmentCard key={indx} assignmentTitle= {card.assignmentTitle} card={assignments.assignmentDescription}
-      courseCode={card.courseCode} startDate={card.startDate} endDate={card.endDate} assignmentCount={indx}   />
-    })}
+    {/* { 
+      assignmnetsArray.map((card,indx)=>{
+        return <AssignmentCard key={indx} assignmentTitle= {card.assignmentTitle} card={assignments.assignmentDescription}
+        courseCode={card.courseCode} startDate={card.startDate} endDate={card.endDate} assignmentCount={indx}   />
+      })
+    } */}
+    {
+      allData.map((course)=>{
+        const courseName=course.courseName
+       return  course.assignments.map((card,ind)=>{
+            // console.log(assignment)
+              return <AssignmentCard courseName={courseName} key={ind} assignmentTitle= {card.assignmentTitle} card={card.assignmentDescription}
+              courseCode={course.courseCode} startDate={card.startDate} endDate={card.endDate} assignmentCount={card.assignmentId}   />
+           
+          })
+      })
+    }
     </Box>
     </Box>
   )

@@ -1,15 +1,16 @@
 import React, { useRef, useState } from 'react'
 import { Modal , Box , Typography,TextField ,Button,InputLabel,MenuItem,FormControl,Select } from '@mui/material'
 import { useData } from '../context/Data';
+import { setDate } from 'date-fns';
 
 
 const AddLecture = ({toggleLecture,setToggleLecture}) => {
-    const{courses} = useData()
+    const{allData,setData} = useData()
     const inputRefs = useRef([]);
     const [courseCode , setCourseCode] = useState('')
+    console.log(allData);
 
-
-//Css styles for Box
+//Css styles for Model Box
      const style = {
        position: 'absolute',
        top: '50%',
@@ -24,11 +25,41 @@ const AddLecture = ({toggleLecture,setToggleLecture}) => {
        p: 4,
      };
  const handleSubmit=()=>{
+          const lectureInputValue= {
+            lectureTitle:inputRefs.current[0].value,
+            lectureLink:inputRefs.current[1].value,
+            courseCode:courseCode
+          }
+          console.log(lectureInputValue);
+//Adding The Lecture Data to the allData based on relivent Course Code
+   const updatedData= allData.map((course)=>{
+      if(course.courseCode==courseCode){
+        return {
+          ...course,
+          lectures:[
+            ...course.lectures,
+            {
+              lectureId:course.lectures.length+1,
+              lectureTitle:inputRefs.current[0].value,
+              lectureLink:inputRefs.current[1].value,
+            }
+          ]
+        }
+      }
+      else{
+        return course
+      }
+   })
+   setData(updatedData)
+   //Closing the Model Box
+   setToggleLecture(false);
+   console.log(updatedData);
 
+  
  }
 
- const handleCourseCode = ()=>{
-       setCourseCode(e.target.value)
+ const handleCourseCode = (event)=>{
+       setCourseCode(event.target.value)
  }
 
   return (
@@ -54,7 +85,7 @@ const AddLecture = ({toggleLecture,setToggleLecture}) => {
           label="Course Code"
           onChange={handleCourseCode}
           >
-          {courses.map((course,index)=><MenuItem key={index} value={course.courseCode}>{course.courseCode}</MenuItem>)}
+          {allData.map((course,index)=><MenuItem key={index} value={course.courseCode}>{course.courseCode}</MenuItem>)}
         </Select>
       </FormControl>
     </Box>
