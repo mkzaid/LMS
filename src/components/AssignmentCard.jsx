@@ -11,6 +11,7 @@ import { useData } from '../context/Data';
 const AssignmentCard = ({assignmentTitle,assignmentDescription,courseCode,startDate,endDate,assignmentCount}) => {
     const {setCourses, courses} = useData()
     const courseObj = courses.find(obj => obj.courseCode === courseCode )
+
     //  setCourses([
     //   ...courses,
     //   {

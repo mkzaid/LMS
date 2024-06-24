@@ -13,6 +13,9 @@ const SideBar = () => {
                <button>
                 <Link to={'/assign'} >Assignments</Link>
                </button>
+               <button>
+                <Link to={'/lecture'} >Lectures</Link>
+               </button>
             </div>
     </div>
   )
